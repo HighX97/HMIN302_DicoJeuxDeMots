@@ -1,0 +1,68 @@
+========================================================
+https://github.com/angular/angular/issues/8913
+
+========================================================
+NgFOR
+http://stackoverflow.com/questions/35647365/how-to-display-json-object-using-ngfor/35647396#35647396
+
+========================================================
+How to call another components function in angular2
+I have two components as follow and I want to call a function from another component. Both components are included in the third parent component using directive.
+
+Component 1:
+
+@component(
+selector:'com1'
+)
+export class com1{
+function1(){...}
+}
+Component 2:
+
+@component(
+selector:'com2'
+)
+export class com2{
+function2(){...
+// i want to call function 1 from com1 here
+}
+}
+I've tried using @input and @output but I don't understand exactly how to use it and how to call that function, can anyone help?
+
+
+http://stackoverflow.com/questions/37587732/how-to-call-another-components-function-in-angular2
+
+2
+down vote
+accepted
+If com1 and com2 are siblings you can use
+
+@component({
+  selector:'com1',
+})
+export class com1{
+  function1(){...}
+}
+com2 emits an event using an EventEmitter
+
+@component({
+  selector:'com2',
+  template: `<button (click)="function2()">click</button>`
+)
+export class com2{
+  @Output() myEvent = new EventEmitter();
+  function2(){...
+    this.myEvent.emit(null)
+  }
+}
+Here the parent component adds an event binding to listen to myEvent events and then calls com1.function1() when such an event happens. #com1 is a template variable that allows to refer to this element from elsewhere in the template. We use this to make function1() the event handler for myEvent of com2:
+
+@component({
+  selector:'parent',
+  template: `<com1 #com1></com1><com2 (myEvent)="com1.function1()"></com2>`
+)
+export class com2{
+}
+For other options to communicate between components see also https://angular.io/docs/ts/latest/cookbook/component-communication.html
+
+shareimprove this answer

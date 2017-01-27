@@ -1,0 +1,47 @@
+#nav_main
+{
+}
+
+
+#MENUSIDEindent {
+    height: auto;
+    width: 100%;
+}
+
+#MENUSIDE {
+    background-color: #313b3f;
+    border-right: 1px solid #151d21;
+    float: left;
+    overflow: hidden;
+    width: 299px;
+}
+
+#CONTENTSIDE {
+    background-color: #ffffff;
+    margin-left: 300px;
+    overflow: hidden;
+    width: auto;
+    z-index: 1;
+}
+
+
+#body_top
+{
+     position: relative;
+     margin: 75px 0px;
+}
+
+a.back-to-top {
+	display: none;
+	width: 60px;
+	height: 60px;
+	text-indent: -9999px;
+	position: fixed;
+	z-index: 999;
+	right: 20px;
+	bottom: 20px;
+	background: #27AE61 url("../images/up-arrow-circle-hi_trans.png") no-repeat center 43%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}

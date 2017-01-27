@@ -1,0 +1,82 @@
+<div [ngSwitch]="switch_btn" style="display : none;">
+  <div class="form-group has-success has-feedback" *ngSwitchCase=2>
+    <div class="alert alert-success fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Success! {{mot}} found </strong>
+    </div>
+    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+  </div>
+  <div class="form-group has-warning has-feedback" *ngSwitchCase=4>
+    <div class="alert alert-warning fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Wait!  {{mot}}  finding </strong>
+    </div>
+  </div>
+  <div class="form-group has-error has-feedback" *ngSwitchCase=3>
+    <div class="alert alert-danger fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>NotFound!  {{mot}} not found </strong>
+    </div>
+    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <div class="form-group" *ngSwitchDefault>
+    <div class="alert alert-info fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Tapez un mot dans la bar de recherche</strong>.
+    </div>
+  </div>
+</div>
+
+<hr>
+Mots recherchées définition
+<div  *ngFor="let mot_r of mots_recherches_def">
+  <div [ngSwitch]="mot_r.state">
+  <div class="form-group has-success has-feedback" *ngSwitchCase=2>
+    <div class="alert alert-success fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Success! {{mot_r.mot}} définition  found at {{mot_r.dateSearch | date:"hh:mm:ss"}}</strong>
+    </div>
+    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+  </div>
+  <div class="form-group has-error has-feedback" *ngSwitchCase=3>
+    <div class="alert alert-danger fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>NotFound!  {{mot_r.mot}} définition  not found at {{mot_r.dateSearch | date:"hh:mm:ss"}} </strong>
+    </div>
+    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <div class="form-group" *ngSwitchDefault>
+    <div class="alert alert-info fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Tapez un {{mot_r.mot}} définition dans la bar de recherche</strong>.
+    </div>
+  </div>
+</div>
+</div>
+
+<hr>
+Mots recherchées relation
+<div  *ngFor="let mot_r of mots_recherches_relation">
+  <div [ngSwitch]="mot_r.state">
+  <div class="form-group has-success has-feedback" *ngSwitchCase=2>
+    <div class="alert alert-success fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Success! {{mot_r.mot}} relation found at {{mot_r.dateSearch | date:"hh:mm:ss"}}</strong>
+    </div>
+    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+  </div>
+  <div class="form-group has-error has-feedback" *ngSwitchCase=3>
+    <div class="alert alert-danger fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>NotFound!  {{mot_r.mot}} relation not found at {{mot_r.dateSearch | date:"hh:mm:ss"}}</strong>
+    </div>
+    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+  </div>
+  <div class="form-group" *ngSwitchDefault>
+    <div class="alert alert-info fade in">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Tapez un {{mot_r.mot}} relation dans la bar de recherche</strong>.
+    </div>
+  </div>
+</div>
+</div>

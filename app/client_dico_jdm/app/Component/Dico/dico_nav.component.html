@@ -1,0 +1,168 @@
+<div class="row">
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+            <form class="form-inline">
+              <p-autoComplete
+              #mot_auto_complete
+              [(ngModel)]="searchedWord"
+              name="searchedWord"
+              [suggestions]="mots_auto_complete"
+              (completeMethod)="filterMot(mot_auto_complete.value)"
+              field="name"
+              data-toggle="tooltip" data-placement="bottom" title="Select a word!"
+              [minLength]="1"
+              class="form-control ng-valid ui-inputwrapper-filled ng-dirty ng-touched"
+              placeholder="Dico JdM ..."
+              (keyup.enter)="search_word(mot_auto_complete.value);">
+            </p-autoComplete>
+
+            <p-autoComplete
+            *ngIf="searchMode == 1"
+            #relation_auto_complete
+            [(ngModel)]="searchedRelation"
+            name="searchedRelation"
+            [suggestions]="relations_auto_complete"
+            (completeMethod)="filterRelation(relation_auto_complete.value)"
+            field="name"
+            data-toggle="tooltip" data-placement="bottom" title="Select a relation!"
+            [minLength]="1"
+            class="form-control ng-valid ui-inputwrapper-filled ng-dirty ng-touched"
+            placeholder="relation ..."
+            (keyup.enter)="search_word_by_relation();">
+            </p-autoComplete>
+
+        </form>
+
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      <li>
+        <div [ngSwitch]="switch_btn">
+          <a href="#body_top">
+            <button type="button" class="btn btn-primary" (click)="search_word(searchedWord)" *ngSwitchCase=0 >Search {{searchMode}}</button>
+          </a>
+          <a href="#body_top">
+            <button type="button" class="btn btn-warning" (click)="razbtn()" *ngSwitchCase=1>Wait {{searchMode}}</button>
+          </a>
+          <a href="#body_top">
+            <button type="button" class="btn btn-success" (click)="search_word(searchedWord)" *ngSwitchCase=2>Find {{searchMode}}</button>
+          </a>
+          <a href="#body_top">
+            <button type="button" class="btn btn-danger" (click)="razbtn()" *ngSwitchCase=3>Err {{searchMode}}</button>
+          </a>
+        </div>
+      </li>
+      <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">SearchMode<span class="caret"></span></a>
+  <ul class="dropdown-menu" role="menu">
+    <li><a (click)="searchMode = 0 ">Recherche entrée exacte et approvimative</a></li>
+      <li class="divider"></li>
+    <li><a (click)="searchMode = 1">Recherche entrée via relations</a></li>
+      <li class="divider"></li>
+    <li><a (click)="searchMode=2">Recherche entrée via forme de chaine</a></li>
+  </ul>
+</li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown"   *ngIf="mots_relation_orderby">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AretesTypes <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <div *ngFor="let tabmot of mots_relation_orderby">
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header"><h1>{{tabmot[0].rt_name}}</h1></li>
+            <li>
+              <label>
+                <input type="checkbox" id="cbox{{tabmot[0].rtid}}" data-md-icheck (change)="toogle_arete($event,tabmot[0].rtid)">
+                {{tabmot[0].rtid}}
+                <a href="#link{{tabmot[0].rtid}}">
+                  {{tabmot[0].rt_name}}
+                </a>
+                {{tabmot.length}}
+              </label>
+            </li>
+          </div>
+        </ul>
+      </li>
+      <li class="dropdown" *ngIf="mots">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">MotsDefs <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <div *ngFor="let mot of mots | keys">
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header"><h1>{{mot.value.name}}</h1></li>
+            <li >
+
+              <label>
+                <input type="checkbox" id="motbox{{mot.value.id}}" value="premiere_checkbox">
+                <a data-toggle="collapse" href="#collapse{{mot.value.eid}">{{mot.value.eid}}</a>
+
+                <a href="#{{mot.value.eid}}">
+                  {{mot.value.name}}
+                </a>
+              </label>
+            </li>
+          </div>
+        </ul>
+      </li>
+      <li class="dropdown" *ngIf="mots_find_by_relation">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">MotsByRelations <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <div *ngFor="let mot of mots_find_by_relation | keys">
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header"><h1>{{mot.value.name}}</h1></li>
+            <li >
+
+              <label>
+                <input type="checkbox" id="motbox{{mot.value.id}}" value="premiere_checkbox">
+                <a data-toggle="collapse" href="#collapse_mot_by_relation{{mot.value.id}}">{{mot.value.id}}</a>
+
+                <a href="#MFBR{{mot.value.id}}">
+                  {{mot.value.name}}
+                </a>
+              </label>
+            </li>
+          </div>
+        </ul>
+      </li>
+    </ul>
+  </div><!--/.nav-collapse -->
+</div>
+</nav>
+
+</div>
+<div class="row" id="body_top">
+  <div class="row">
+    <div class="container" class="col-sm-2">
+      <dico_alert
+      [mot]="searchedWord"
+      [mots_recherches_def]="mots_recherches_def"
+      [mots_recherches_relation]="mots_recherches_relation"
+      [aretesTypes]="aretesTypes"
+      [switch_btn]="switch_btn">
+    </dico_alert>
+  </div>
+
+  <div class="container" class="col-sm-10" >
+    <dico_body
+    [mots_def]="mots"
+    [mots_find_by_relation] = "mots_find_by_relation"
+    [value]="value"
+    [mots_relation]="mots_relation"
+    [mots_relation_orderby]="mots_relation_orderby"
+    [mots_by_assoc]="mots_by_assoc"
+    [data_mots_recherches_relation]="data_mots_recherches_relation"
+    (motClick)="search_word2($event)">
+  </dico_body>
+</div>
+</div>
+</div>
+
+<a href="#body_top" class="back-to-top">Back to Top</a>

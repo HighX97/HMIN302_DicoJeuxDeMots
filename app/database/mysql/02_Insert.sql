@@ -1,0 +1,40 @@
+LOAD DATA LOCAL INFILE 'mots_dump_5_10_2016.csv'
+INTO TABLE Mots
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(eid , name , t , w , nf) ;
+
+LOAD DATA LOCAL INFILE 'aretes_dump_10_9_2016.csv'
+INTO TABLE Aretes
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(rid , nA , nB , t , w) ;
+
+LOAD DATA LOCAL INFILE 'relationTypes_dump_10_11_2016.csv'
+INTO TABLE AretesTypes
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(rtid , name , nom_etendu , info) ;
+
+
+LOAD DATA LOCAL INFILE 'motsTypes.csv'
+INTO TABLE MotsTypes
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+(id , name) ;
+
+LOAD DATA LOCAL INFILE 'motsDefs.csv'
+INTO TABLE MotsDefs
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+(id , termid , def , date , playerid) ;
+
+SET FOREIGN_KEY_CHECKS=1;

@@ -1,0 +1,100 @@
+
+<p-growl [(value)]="msgs"></p-growl>
+  <p-progressBar [value]="value"></p-progressBar>
+
+<div ng-if="data_mots_recherches_relation != null" >
+  <p-growl [value]="msgs" sticky="sticky"></p-growl>
+  <p-chart type="bar" [data]="data_mots_recherches_relation"></p-chart>
+</div>
+<p-growl [value]="msgsLineChart"></p-growl>
+
+<p-chart type="line" [data]="dataLineChart" (onDataSelect)="selectData($event)"></p-chart>
+
+<div>
+    <button type="button" (click)="showSuccess()" label="Success" class="btn btn-success"></button>
+    <button type="button" (click)="showInfo()" label="Info" class="btn btn-info"></button>
+    <button type="button" (click)="showWarn()" label="Warn" class="btn btn-warning"></button>
+    <button type="button" (click)="showError()" label="Error" class="btn btn-danger"></button>
+    <button type="button" (click)="showMultiple()" label="Multiple" class="btn btn-primary"></button>
+</div>
+
+  <div >
+    <h2>mots_def</h2>
+  <div class="panel-group" id="accordion">
+
+    <div class="panel panel-default" *ngFor="let mot of mots_def | keys">
+     <div class="panel-heading" >
+       <h3 class="panel-title">
+         <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{mot.value.eid}}" id="{{mot.value.eid}}">
+         {{mot.value.eid}} : {{mot.value.name}}</a>
+       </h3>
+     </div>
+     <div id="collapse{{mot.value.eid}}" class="panel-collapse collapse in">
+       <div class="panel-body">
+         <blockquote>
+               <p>{{mot.value.def}}</p>
+               <footer>From Jeux De Mots</footer>
+             </blockquote>
+           </div>
+     </div>
+    </div>
+      <h2>mots_find_by_relation</h2>
+    <div class="panel-group" id="accordion_mot_by_relation">
+
+    <div class="panel panel-default" *ngFor="let mot of mots_find_by_relation | keys">
+     <div class="panel-heading" >
+       <h3 class="panel-title">
+
+         <div class="row">
+         <div class="col-sm-8">
+           <a data-toggle="collapse" data-parent="#accordion_mot_by_relation" href="#collapse_mot_by_relation{{mot.value.id}}" id="MFBR{{mot.value.id}}">
+           {{mot.value.id}} : {{mot.value.name}}</a>
+           </div>
+           <div class="col-sm-4">
+             <span class="badge" (click)="cliked_word(mot.value.name)" >GO</span>
+             </div>
+             </div>
+
+       </h3>
+
+     </div>
+     <div id="collapse_mot_by_relation{{mot.value.id}}" class="panel-collapse collapse in">
+       <div class="panel-body">
+         <blockquote>
+               <p>{{mot.value.def}}</p>
+               <footer>From Jeux De Mots</footer>
+             </blockquote>
+           </div>
+     </div>
+    </div>
+    </div>
+</div>
+</div>
+<div  *ngFor="let tabmot of mots_relation_orderby">
+  <div class="panel-group" id="link{{tabmot[0].rtid}}">
+   <div class="panel panel-default">
+     <div class="panel-heading">
+       <h3 class="panel-title">
+         <a data-toggle="collapse" id="{{tabmot[0].rt_name}}" href="#collapse{{tabmot[0].rtid}}">
+           <div class="row">
+           <div class="col-sm-8">
+             {{tabmot[0].rt_name}}
+             </div>
+             <div class="col-sm-4">
+               <span class="badge">{{tabmot.length}}</span>
+               </div>
+               </div>
+
+         </a>
+       </h3>
+     </div>
+     <div id="collapse{{tabmot[0].rtid}}" class="panel-collapse collapse in">
+       <div class="panel-body">  <a (click)="cliked_word(mot.value.name)" *ngFor="let mot of tabmot | keys" href="#body_top">
+           {{mot.value.name}} ,
+         </a></div>
+       <div class="panel-footer">{{tabmot[0].rt_name}} </div>
+     </div>
+   </div>
+  </div>
+  <hr>
+</div>
